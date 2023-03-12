@@ -5,24 +5,27 @@ enum class State {
 	Regular,
 	Medium,
 	Critical,
+	Undefined,
 };
 
 
 class Patient
 {
-private:
+protected:
 	std::string _name;
 	std::string _surname;
 	std::string _patronymic;
 	State _patientState;
 public:
+	Patient() : _patientState(State::Undefined) {}
+
 	Patient(const std::string& firstName,
 		const std::string& lastName,
 		const std::string& patronymic,
 		State state) : _name(firstName),
-					   _surname(lastName),
-					   _patronymic(patronymic),
-					   _patientState(state)
+		_surname(lastName),
+		_patronymic(patronymic),
+		_patientState(state)
 	{}
 
 	std::string GetFirstName() const {
@@ -38,8 +41,27 @@ public:
 		return _patientState;
 	}
 
+	virtual ~Patient();
 
+
+	bool operator>(const Patient& p) const
+	{
+		if (this->GetState() > p.GetState())
+			return true;
+		else
+			return false;
+	}
+
+
+	bool operator>(const VIP_Patient& p) const
+	{
+		if (this->GetState() == State::Critical && p.GetState() != State::Critical)
+			return true;
+		else
+			return false;
+	}
 };
+
 
 
 class VIP_Patient : public Patient {
@@ -54,8 +76,32 @@ public:
 
 	}
 
-	size_t getMoney() const { return moneyAmount; }
+	size_t GetMoney() const { return moneyAmount; }
+
+
+	bool operator>(const Patient& p) const
+	{
+		if (p.GetState() != State::Critical)
+			return true;
+		else if (this->GetState() == State::Critical && p.GetState() == State::Critical)
+			return true;
+		else
+			return false;
+	}
+
+
+	bool operator>(const VIP_Patient& p) const
+	{
+		if (this->GetState() == p.GetState() && this->GetMoney() > p.GetMoney())
+			return true;
+		else if (this->GetState() > p.GetState())
+			return true;
+		else
+			return false;
+	}
 };
+
+
 
 
 

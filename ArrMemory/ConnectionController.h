@@ -5,6 +5,8 @@
 #include <iostream>
 #include "Patient.h"
 
+#pragma warning(disable: 4996)
+
 //Client
 class ConnectionController
 {

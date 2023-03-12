@@ -139,12 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Client.cpp" />
     <ClCompile Include="ConnectionController.cpp" />
     <ClCompile Include="DataHandler.cpp" />
     <ClCompile Include="DoctorApplication.cpp" />
     <ClCompile Include="Patient.cpp" />
     <ClCompile Include="Queue.cpp" />
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConnectionController.h" />
