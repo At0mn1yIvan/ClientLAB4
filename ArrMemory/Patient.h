@@ -41,7 +41,7 @@ public:
 		return _patientState;
 	}
 
-	virtual ~Patient();
+	virtual ~Patient(){}
 
 
 	bool operator>(const Patient& p) const
@@ -52,54 +52,9 @@ public:
 			return false;
 	}
 
-
-	bool operator>(const VIP_Patient& p) const
-	{
-		if (this->GetState() == State::Critical && p.GetState() != State::Critical)
-			return true;
-		else
-			return false;
-	}
 };
 
 
-
-class VIP_Patient : public Patient {
-private:
-	size_t moneyAmount;
-public:
-	VIP_Patient(const std::string& firstName,
-		const std::string& lastName,
-		const std::string& patronymic,
-		State state,
-		size_t _moneyAmount = 1000) : Patient(firstName, lastName, patronymic, state), moneyAmount(_moneyAmount) {
-
-	}
-
-	size_t GetMoney() const { return moneyAmount; }
-
-
-	bool operator>(const Patient& p) const
-	{
-		if (p.GetState() != State::Critical)
-			return true;
-		else if (this->GetState() == State::Critical && p.GetState() == State::Critical)
-			return true;
-		else
-			return false;
-	}
-
-
-	bool operator>(const VIP_Patient& p) const
-	{
-		if (this->GetState() == p.GetState() && this->GetMoney() > p.GetMoney())
-			return true;
-		else if (this->GetState() > p.GetState())
-			return true;
-		else
-			return false;
-	}
-};
 
 
 

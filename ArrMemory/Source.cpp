@@ -3,7 +3,7 @@
 
 
 int main() {
-	ConnectionController cc();
+	ConnectionController cc;
 
 	return 0;
 }

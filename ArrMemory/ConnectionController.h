@@ -11,7 +11,7 @@
 class ConnectionController
 {
 private:
-	static SOCKET _socket;
+	SOCKET _socket;
 	std::string _addressIp;
 	SOCKADDR_IN addr;
 	void Connect() {
@@ -26,10 +26,9 @@ private:
 		//recv(Connection, msg, sizeof(msg), NULL); // Connection - сокет, который хранит соединение с сервером, от которого придет сообщение. Второй параметр - переменная в которую будет записываться сообщение
 		//std::cout << msg << std::endl;
 
-		//CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)ClientHandler, NULL, NULL, NULL);
-		CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)ClientSender, NULL, NULL, NULL);
+		ClientSender();
+
 	}
-	void Reconnect();
 	std::string GetData();
 	
 public:
@@ -53,27 +52,23 @@ public:
 
 
 
-	static void ClientHandler() {
-		int msg_size;
-		while (true) {
-			recv(_socket, (char*)&msg_size, sizeof(int), NULL);
-			char* msg = new char[msg_size + 1];
-			msg[msg_size] = '\0';
-			recv(_socket, msg, msg_size, NULL);
-			std::cout << msg << std::endl;
-			delete[] msg;
-		}
-	}
 
 
-	static void ClientSender() {
+	void ClientSender() {
 		std::string msgl;
 		while (true) {
 			std::getline(std::cin, msgl);
 			int msg_size = msgl.size();
 			send(_socket, (char*)&msg_size, sizeof(int), NULL);
 			send(_socket, msgl.c_str(), msg_size, NULL);
-			Sleep(10); // пауза
+			Sleep(1); // пауза
+
+			recv(_socket, (char*)&msg_size, sizeof(int), NULL);
+			char* msg = new char[msg_size + 1];
+			msg[msg_size] = '\0';
+			recv(_socket, msg, msg_size, NULL);
+			std::cout << msg << std::endl;
+			delete[] msg;
 
 		}
 	}

@@ -2,6 +2,7 @@
 #include <string>
 #include "Patient.h"
 #include <nlohmann/json.hpp>
+#include "VIP_Patient.h"
 
 using json = nlohmann::json;
 
@@ -16,7 +17,7 @@ private:
 	}
 	static std::string Packing(const VIP_Patient& vp)   //To JSON
 	{
-		json toJson = json{ {"Firstname", vp.GetFirstName()}, {"Lastname", vp.GetLastName()}, {"Patronymic", vp.GetPatronymic()}, {"State", vp.GetState()}, {"Money", vp.getMoney()}};
+		json toJson = json{ {"Firstname", vp.GetFirstName()}, {"Lastname", vp.GetLastName()}, {"Patronymic", vp.GetPatronymic()}, {"State", vp.GetState()}, {"Money", vp.GetMoney()}};
 		return toJson.dump();
 		
 	}
@@ -32,10 +33,6 @@ private:
 			return Patient(fromJson.at("Firstname"), fromJson.at("Lastname"), fromJson.at("Patronymic"), fromJson.at("State"));
 		
 		}
-
-	
-	
-	
 	} 
 };
 
