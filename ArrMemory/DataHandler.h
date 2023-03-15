@@ -8,7 +8,7 @@ using json = nlohmann::json;
 
 class DataHandler
 {
-private:
+public:
 	static std::string Packing(const Patient& p)   //To JSON
 	{
 		json toJson = json{ {"Firstname", p.GetFirstName()}, {"Lastname", p.GetLastName()}, {"Patronymic", p.GetPatronymic()}, {"State", p.GetState()}};
